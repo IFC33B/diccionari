@@ -1,6 +1,8 @@
 package ifc33b.dwesc.diccionari.service;
 
+import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,11 +16,18 @@ import ifc33b.dwesc.diccionari.repository.ParaulaRepository;
 public class ParaulaService {
     @Autowired
     private ParaulaRepository paraulaRepository;
-    
+
+    // Devolver todas las palabras
+    public List<ParaulaResponse> getParaules() {
+        return paraulaRepository.findAll().stream()
+                .map(ParaulaResponse::new)
+                .collect(Collectors.toList());
+    }
+
     // Devolver palabra exacta
     public ParaulaResponse getParaula(String cerca) {
         Paraula paraula = paraulaRepository.findByTerme(cerca)
-            .orElseThrow(() -> new NoSuchElementException("No se ha encontrado la palabra: " + cerca));
+                .orElseThrow(() -> new NoSuchElementException("No se ha encontrado la palabra: " + cerca));
 
         return new ParaulaResponse(paraula);
     }

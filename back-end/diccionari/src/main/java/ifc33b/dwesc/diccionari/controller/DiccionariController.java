@@ -1,5 +1,7 @@
 package ifc33b.dwesc.diccionari.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,7 +24,16 @@ public class DiccionariController {
     @Autowired
     private ParaulaService paraulaService;
 
-    @GetMapping("/terme") // Devolver una palabra exacta
+    @GetMapping() // Devolver todas las palabras
+    public ResponseEntity<List<ParaulaResponse>> getParaules() {
+        // Service
+        List<ParaulaResponse> response = paraulaService.getParaules();
+
+        // HTTP Response
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/{terme}") // Devolver una palabra exacta
     public ResponseEntity<ParaulaResponse> getParaula(@PathVariable String terme) {
         // Service
         ParaulaResponse response = paraulaService.getParaula(terme);
