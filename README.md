@@ -220,6 +220,7 @@ diccionari/
 │       │   │   │   │   └──  ParaulaService.java
 │       │   │   │   ├── exception/
 │       │   │   │   │   ├── GlobalExceptionHandler.java
+│       │   │   │   │   ├── ParaulaAlreadyExistsException.java
 │       │   │   │   │   └── ParaulaNotFoundException.java
 │       │   │   └── resources/
 │       │   │       └── application.properties
