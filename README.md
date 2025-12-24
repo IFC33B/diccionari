@@ -19,6 +19,7 @@ Aplicación que simula un diccionario de palabras con backend en Spring Boot y f
     - `model` - Modelos Java
     - `repository` - JPA
     - `service` - Lógica de negocio
+    - `exception` - Control de excepciones
   - `src/main/resources/` - Recursos de la aplicación
   - `src/test/` - Tests unitarios
   - `pom.xml` - Dependencias Maven
@@ -215,8 +216,11 @@ diccionari/
 │       │   │   │   │   └── Paraula.java
 │       │   │   │   ├── repository/
 │       │   │   │   │   └──   ParaulaRepository.java
-│       │   │   │   └── service/
-│       │   │   │       └──  ParaulaService.java
+│       │   │   │   ├── service/
+│       │   │   │   │   └──  ParaulaService.java
+│       │   │   │   ├── exception/
+│       │   │   │   │   ├── GlobalExceptionHandler.java
+│       │   │   │   │   └── ParaulaNotFoundException.java
 │       │   │   └── resources/
 │       │   │       └── application.properties
 │       │   └── test/

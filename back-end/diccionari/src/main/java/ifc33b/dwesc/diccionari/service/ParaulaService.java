@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import ifc33b.dwesc.diccionari.dto.ParaulaRequest;
 import ifc33b.dwesc.diccionari.dto.ParaulaResponse;
+import ifc33b.dwesc.diccionari.exception.ParaulaNotFoundException;
 import ifc33b.dwesc.diccionari.model.Paraula;
 import ifc33b.dwesc.diccionari.repository.ParaulaRepository;
 
@@ -27,7 +28,7 @@ public class ParaulaService {
     // Devolver palabra exacta
     public ParaulaResponse getParaula(String cerca) {
         Paraula paraula = paraulaRepository.findByTermeIgnoreCase(cerca)
-                .orElseThrow(() -> new NoSuchElementException("No se ha encontrado la palabra: " + cerca));
+                .orElseThrow(() -> new ParaulaNotFoundException(cerca));
 
         return new ParaulaResponse(paraula);
     }
