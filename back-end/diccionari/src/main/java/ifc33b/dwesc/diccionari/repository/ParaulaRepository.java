@@ -9,5 +9,5 @@ import ifc33b.dwesc.diccionari.model.Paraula;
 
 @Repository
 public interface ParaulaRepository extends JpaRepository<Paraula, Long> {
-    Optional<Paraula> findByTerme(String terme);
+    Optional<Paraula> findByTermeIgnoreCase(String terme);
 }

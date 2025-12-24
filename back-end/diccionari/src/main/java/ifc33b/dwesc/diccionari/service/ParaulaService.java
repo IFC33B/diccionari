@@ -26,7 +26,7 @@ public class ParaulaService {
 
     // Devolver palabra exacta
     public ParaulaResponse getParaula(String cerca) {
-        Paraula paraula = paraulaRepository.findByTerme(cerca)
+        Paraula paraula = paraulaRepository.findByTermeIgnoreCase(cerca)
                 .orElseThrow(() -> new NoSuchElementException("No se ha encontrado la palabra: " + cerca));
 
         return new ParaulaResponse(paraula);
