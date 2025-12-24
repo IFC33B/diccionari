@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import ifc33b.dwesc.diccionari.dto.ParaulaRequest;
 import ifc33b.dwesc.diccionari.dto.ParaulaResponse;
+import ifc33b.dwesc.diccionari.exception.ParaulaAlreadyExistsException;
 import ifc33b.dwesc.diccionari.exception.ParaulaNotFoundException;
 import ifc33b.dwesc.diccionari.model.Paraula;
 import ifc33b.dwesc.diccionari.repository.ParaulaRepository;
@@ -35,6 +36,10 @@ public class ParaulaService {
 
     // Crear palabra
     public ParaulaResponse createParaula(ParaulaRequest request) {
+        if (paraulaRepository.existsByTermeIgnoreCase(request.getTerme())) {
+            throw new ParaulaAlreadyExistsException(request.getTerme());
+        }
+
         Paraula paraula = new Paraula(request.getTerme(), request.getDefinicio());
         paraulaRepository.save(paraula);
         return new ParaulaResponse(paraula);
