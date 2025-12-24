@@ -6,6 +6,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
 @Entity
@@ -18,9 +19,11 @@ public class Paraula {
     private Long id;
 
     @Column(nullable = false, unique = true)
+    @NotBlank(message = "Se requiere un nombre para el termino")
     private String terme;
 
     @Column(nullable = false)
+    @NotBlank(message = "Se requiere una definición para el termino")
     private String definicio;
 
     // Constructor
