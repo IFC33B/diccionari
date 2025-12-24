@@ -1,4 +1,4 @@
-import java.util.List;
+package ifc33b.dwesc.diccionari.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
