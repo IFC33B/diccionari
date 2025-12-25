@@ -2,18 +2,19 @@ import { Component, signal } from '@angular/core';
 import { Paraula } from '../../models';
 import { ParaulaService } from '../../services/paraula.service';
 import { FormsModule } from '@angular/forms';
+import { HttpErrorResponse } from '@angular/common/http';
+import { RouterLink } from "@angular/router";
 
 @Component({
   selector: 'app-llista-paraules',
-  imports: [FormsModule],
+  imports: [FormsModule, RouterLink],
   templateUrl: './llista-paraules.html',
   styleUrl: './llista-paraules.css',
 })
 export class LlistaParaules {
   paraula = signal<Paraula | null>(null);
   carregant = signal(false);
-  error = signal<string | null>(null);
-  errorCode = signal<string | null>(null);
+  error = signal<HttpErrorResponse | null>(null);
 
   cerca: string = '';
 
@@ -32,8 +33,7 @@ export class LlistaParaules {
       },
 
       error: (err) => {
-        this.error.set(err.message || 'Error al cargar la palabra');
-        this.errorCode.set(err.status);
+        this.error.set(err);
         this.carregant.set(false);
       }
     })
