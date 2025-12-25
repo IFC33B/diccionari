@@ -9,7 +9,7 @@ import { Paraula, ParaulaRequest } from '../models';
 export class ParaulaService {
   private apiURL = 'http://localhost:8080/api/diccionari'
 
-  constructor(private http: HttpClient) {};
+  constructor(private http: HttpClient) { };
 
   // Obtener una palabra
   getParaula(paraula: string): Observable<Paraula> {
@@ -40,6 +40,10 @@ export class ParaulaService {
     }
 
     console.log(errorMessage);
-    return throwError(() => Error(errorMessage))
+    return throwError(() => ({
+      status: error.status,
+      message: errorMessage,
+      error: error.error
+    }))
   }
 }

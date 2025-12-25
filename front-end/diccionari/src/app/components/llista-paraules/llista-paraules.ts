@@ -13,6 +13,7 @@ export class LlistaParaules {
   paraula = signal<Paraula | null>(null);
   carregant = signal(false);
   error = signal<string | null>(null);
+  errorCode = signal<string | null>(null);
 
   cerca: string = '';
 
@@ -31,9 +32,9 @@ export class LlistaParaules {
       },
 
       error: (err) => {
-        this.error.set('Error al cargar la palabra')
+        this.error.set(err.message || 'Error al cargar la palabra');
+        this.errorCode.set(err.status);
         this.carregant.set(false);
-        console.log(err);
       }
     })
   }
