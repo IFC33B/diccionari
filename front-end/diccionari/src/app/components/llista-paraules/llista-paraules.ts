@@ -1,11 +1,11 @@
 import { Component, signal } from '@angular/core';
 import { Paraula } from '../../models';
-import { FormControl } from '@angular/forms';
 import { ParaulaService } from '../../services/paraula.service';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-llista-paraules',
-  imports: [],
+  imports: [FormsModule],
   templateUrl: './llista-paraules.html',
   styleUrl: './llista-paraules.css',
 })
@@ -14,7 +14,7 @@ export class LlistaParaules {
   carregant = signal(false);
   error = signal<string | null>(null);
 
-  cerca = signal<string>('');
+  cerca: string = '';
 
   constructor(private paraulaService: ParaulaService) {}
 
@@ -24,7 +24,7 @@ export class LlistaParaules {
     this.error.set(null);
 
     // Service
-    this.paraulaService.getParaula(this.cerca()).subscribe({
+    this.paraulaService.getParaula(this.cerca).subscribe({
       next: (data) => {
         this.paraula.set(data);
         this.carregant.set(false);
