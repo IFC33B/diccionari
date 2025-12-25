@@ -11,6 +11,14 @@ export class ParaulaService {
 
   constructor(private http: HttpClient) {};
 
+  // Obtener una palabra
+  getParaula(paraula: string): Observable<Paraula> {
+    return this.http.get<Paraula>(`${this.apiURL}/${paraula}`)
+      .pipe(
+        catchError(this.handleError)
+      )
+  }
+
   // Gestión de errores
   private handleError(error: HttpErrorResponse) {
     let errorMessage = 'Error desconocido';
