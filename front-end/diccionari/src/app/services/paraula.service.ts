@@ -1,7 +1,7 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, Observable, throwError } from 'rxjs';
-import { Paraula } from '../models';
+import { Paraula, ParaulaRequest } from '../models';
 
 @Injectable({
   providedIn: 'root',
@@ -14,6 +14,14 @@ export class ParaulaService {
   // Obtener una palabra
   getParaula(paraula: string): Observable<Paraula> {
     return this.http.get<Paraula>(`${this.apiURL}/${paraula}`)
+      .pipe(
+        catchError(this.handleError)
+      )
+  }
+
+  // Crear una palabra
+  createParaula(request: ParaulaRequest) {
+    return this.http.post<Paraula>(this.apiURL, request)
       .pipe(
         catchError(this.handleError)
       )
