@@ -1,1 +1,88 @@
-<p>formulari-paraules works!</p>
+<div class="py-10 bg-gray-900 h-full overflow-y-auto">
+    <h2 class="text-center mb-8 text-blue-400 font-extrabold text-4xl pb-10">
+        Formulario para añadir nuevas palabras
+    </h2>
+
+    <!-- Indicador de carga -->
+    @if (carregant()) {
+    <section class="flex flex-col items-center py-8">
+        <div class="animate-spin rounded-full h-12 w-12 border-4 border-blue-400 border-t-blue-600 mb-3"></div>
+        <span class="text-gray-400 text-lg">Creando contacto...</span>
+    </section>
+    }
+
+    <!-- Mensaje de error -->
+    @if (error() && error()?.status == 409) {
+    <section class="bg-blue-950 text-white text-center shadow-lg rounded-2xl p-6 mb-14 border border-blue-950">
+        <p class="mb-3 font-semibold text-lg">La palabra que intentas crear ya existe. Porfavor crea otra o búsquela en
+            la lista. </p>
+        <button (click)="reload()"
+            class="px-5 py-2 me-5 border border-blue-400 text-white rounded-full hover:bg-blue-900 transition-all duration-300 shadow-md">
+            Crear otra palabra
+        </button>
+        <button routerLink="/paraules"
+            class="px-5 py-2 border border-blue-400 text-white rounded-full hover:bg-blue-900 transition-all duration-300 shadow-md">
+            Volver a la lista de palabras
+        </button>
+    </section>
+    } @if (error() && error()?.status != 409) {
+    <section class="bg-red-900 text-red-400 text-center shadow-lg rounded-2xl p-6 mb-8 border border-red-700">
+        <p class="mb-3 font-semibold text-lg">Ha ocurrido un error. Porfavor inténtelo más tarde</p>
+        <button
+            class="px-5 py-2 border border-blue-400 text-white rounded-full hover:bg-blue-900 transition-all duration-300 shadow-md"
+            routerLink="/formulari">
+            Crear otra palabra
+        </button>
+    </section>
+    }
+
+    <!-- Formulario -->
+    @if (!carregant() && !error()) {
+    <section class="max-w-lg mx-auto bg-gray-95 rounded-2xl py-8 px-8 shadow-xl border border-gray-800">
+        <h3 class="mb-6 text-blue-400 text-center text-2xl font-bold tracking-wide">Crear palabra</h3>
+
+        <form #formValidator="ngForm" (submit)="afegirParaula(formValidator)" class="space-y-6">
+            <!-- nombre -->
+            <div>
+                <label for="nombre" class="block mb-2 text-blue-300 font-semibold tracking-wide">Nombre de la
+                    palabra</label>
+                <input type="text" id="nombre" [(ngModel)]="terme" name="nombre" required placeholder="Juego"
+                    minlength="2" #nombreValidator="ngModel"
+                    class="w-full px-5 py-3 rounded-xl bg-gray-800 text-white border border-gray-700 focus:border-blue-400 focus:ring-2 focus:ring-blue-400/50 outline-none shadow-inner placeholder-gray-400 transition-all duration-300">
+
+                @if (nombreValidator.invalid && (nombreValidator.touched || formValidator.submitted)) {
+                <p class="text-red-400 text-sm mt-1">
+                    @if (nombreValidator.errors?.['required']) { El nombre es obligatorio }
+                    @if (nombreValidator.errors?.['minlength']) { Mínimo 2 caracteres }
+                </p>
+                }
+            </div>
+
+            <!-- definición -->
+            <div>
+                <label for="definicio" class="block mb-2 text-blue-300 font-semibold tracking-wide">Definición del
+                    significado de la palabra</label>
+                <textarea id="definicio" rows="5" [(ngModel)]="definicio" name="definicio" required
+                    placeholder="Significado de la palabra" #definicioValidator="ngModel" minlength="10"
+                    class="w-full px-5 py-3 rounded-xl bg-gray-800 text-white border border-gray-700 focus:border-blue-400 focus:ring-2 focus:ring-blue-400/50 outline-none shadow-inner placeholder-gray-400 transition-all duration-300 resize-none">
+                </textarea>
+
+                @if (definicioValidator.invalid && (definicioValidator.touched || formValidator.submitted)) {
+                <p class="text-red-400 text-sm mt-1">
+                    @if (definicioValidator.errors?.['required']) { La definición es obligatoria }
+                    @if (definicioValidator.errors?.['minlength']) { Mínimo 10 caracteres }
+                </p>
+                }
+            </div>
+
+            <!-- Botón -->
+            <div class="flex justify-center">
+                <button type="submit" [disabled]="formValidator.invalid"
+                    class="bg-gradient-to-r from-blue-400 to-blue-600 hover:from-blue-500 hover:to-blue-700 text-black font-bold px-8 py-3 rounded-full shadow-lg transition-all duration-300 transform hover:-translate-y-0.5 hover:shadow-2xl">
+                    Añadir palabra
+                </button>
+            </div>
+        </form>
+    </section>
+    }
+</div>

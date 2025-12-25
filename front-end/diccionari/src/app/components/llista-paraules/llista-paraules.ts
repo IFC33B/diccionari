@@ -35,6 +35,7 @@ export class LlistaParaules {
       error: (err) => {
         this.error.set(err);
         this.carregant.set(false);
+        console.log(err);
       }
     })
   }
